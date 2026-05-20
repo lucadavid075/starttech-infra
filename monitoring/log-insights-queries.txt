@@ -1,0 +1,58 @@
+# StartTech CloudWatch Log Insights Queries
+# Use in: AWS Console → CloudWatch → Log Insights
+# Log Group: /starttech/prod/backend
+
+# ── Error rate over time ───────────────────────────────────────────────────────
+# Query: Error rate by minute
+fields @timestamp, @message
+| filter @message like /(?i)(error|panic|fatal)/
+| stats count(*) as errorCount by bin(1m)
+| sort @timestamp desc
+
+# ── Top error messages ─────────────────────────────────────────────────────────
+fields @message
+| filter @message like /(?i)error/
+| parse @message '"level":"*","msg":"*"' as level, msg
+| stats count(*) as occurrences by msg
+| sort occurrences desc
+| limit 20
+
+# ── Request latency distribution ───────────────────────────────────────────────
+fields @timestamp, @message
+| parse @message '"latency":"*"' as latency
+| stats
+    avg(latency) as avg_ms,
+    pct(latency, 50) as p50_ms,
+    pct(latency, 95) as p95_ms,
+    pct(latency, 99) as p99_ms
+  by bin(5m)
+| sort @timestamp desc
+
+# ── Unique active users (per hour) ────────────────────────────────────────────
+fields @message
+| parse @message '"userID":"*"' as userID
+| filter ispresent(userID)
+| stats count_distinct(userID) as activeUsers by bin(1h)
+| sort @timestamp desc
+
+# ── HTTP 5xx errors with path ─────────────────────────────────────────────────
+fields @timestamp, @message
+| parse @message '"status":*,"path":"*"' as status, path
+| filter status >= 500
+| stats count(*) as count by path
+| sort count desc
+| limit 20
+
+# ── Slowest endpoints (P99 > 1s) ─────────────────────────────────────────────
+fields @message
+| parse @message '"path":"*","latency":"*"' as path, latency
+| stats pct(latency, 99) as p99 by path
+| filter p99 > 1000
+| sort p99 desc
+| limit 10
+
+# ── Authentication failures ────────────────────────────────────────────────────
+fields @timestamp, @message
+| filter @message like /(?i)(invalid.*password|unauthorized|login.*fail)/
+| stats count(*) as failures by bin(5m)
+| sort @timestamp desc
