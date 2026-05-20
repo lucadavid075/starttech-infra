@@ -1,0 +1,78 @@
+{
+  "alarms": [
+    {
+      "name": "starttech-prod-alb-5xx-high",
+      "description": "ALB 5xx error rate exceeded threshold",
+      "metric": "HTTPCode_ELB_5XX_Count",
+      "namespace": "AWS/ApplicationELB",
+      "threshold": 10,
+      "evaluationPeriods": 2,
+      "period": 60,
+      "statistic": "Sum",
+      "comparisonOperator": "GreaterThanThreshold",
+      "severity": "CRITICAL"
+    },
+    {
+      "name": "starttech-prod-alb-latency-p95",
+      "description": "P95 response time exceeded 2 seconds",
+      "metric": "TargetResponseTime",
+      "namespace": "AWS/ApplicationELB",
+      "threshold": 2,
+      "evaluationPeriods": 3,
+      "period": 60,
+      "extendedStatistic": "p95",
+      "comparisonOperator": "GreaterThanThreshold",
+      "severity": "WARNING"
+    },
+    {
+      "name": "starttech-prod-cpu-high",
+      "description": "EC2 CPU utilisation above 70% — scale-up trigger",
+      "metric": "CPUUtilization",
+      "namespace": "AWS/EC2",
+      "threshold": 70,
+      "evaluationPeriods": 2,
+      "period": 60,
+      "statistic": "Average",
+      "comparisonOperator": "GreaterThanThreshold",
+      "severity": "WARNING",
+      "action": "scale-up"
+    },
+    {
+      "name": "starttech-prod-cpu-low",
+      "description": "EC2 CPU utilisation below 20% — scale-down trigger",
+      "metric": "CPUUtilization",
+      "namespace": "AWS/EC2",
+      "threshold": 20,
+      "evaluationPeriods": 5,
+      "period": 60,
+      "statistic": "Average",
+      "comparisonOperator": "LessThanThreshold",
+      "severity": "INFO",
+      "action": "scale-down"
+    },
+    {
+      "name": "starttech-prod-asg-unhealthy",
+      "description": "Unhealthy instances in ASG",
+      "metric": "GroupUnhealthyInstances",
+      "namespace": "AWS/AutoScaling",
+      "threshold": 0,
+      "evaluationPeriods": 1,
+      "period": 60,
+      "statistic": "Sum",
+      "comparisonOperator": "GreaterThanThreshold",
+      "severity": "CRITICAL"
+    },
+    {
+      "name": "starttech-prod-redis-cpu",
+      "description": "ElastiCache CPU above 80%",
+      "metric": "EngineCPUUtilization",
+      "namespace": "AWS/ElastiCache",
+      "threshold": 80,
+      "evaluationPeriods": 2,
+      "period": 60,
+      "statistic": "Average",
+      "comparisonOperator": "GreaterThanThreshold",
+      "severity": "WARNING"
+    }
+  ]
+}
