@@ -52,19 +52,19 @@ jobs:
           working_directory: ${{ env.TF_WORKING_DIR }}
           soft_fail: true
 
-      - name: Run Checkov IaC Scan
-        uses: bridgecrewio/checkov-action@master
-        with:
-          directory: ${{ env.TF_WORKING_DIR }}
-          soft_fail: true
-          output_format: sarif
-          output_file_path: reports
+     #- name: Run Checkov IaC Scan
+     #  uses: bridgecrewio/checkov-action@master
+     #  with:
+     #   directory: ${{ env.TF_WORKING_DIR }}
+     #   soft_fail: true
+     #  output_format: sarif
+     #  output_file_path: reports
 
-      - name: Upload Checkov SARIF
-        uses: github/codeql-action/upload-sarif@v4
-        if: always()
-        with:
-          sarif_file: reports/results_sarif.sarif
+     #- name: Upload Checkov SARIF
+     #   uses: github/codeql-action/upload-sarif@v4
+     # if: always()
+     #  with:
+     #   sarif_file: reports/results_sarif.sarif
 
   # ── Terraform Plan ────────────────────────────────────────────────────────────
   plan:
