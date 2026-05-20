@@ -58,13 +58,13 @@ jobs:
           directory: ${{ env.TF_WORKING_DIR }}
           soft_fail: true
           output_format: sarif
-          output_file_path: checkov-results.sarif
+          output_file_path: reports
 
       - name: Upload Checkov SARIF
         uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
-          sarif_file: checkov-results.sarif
+          sarif_file: reports/results_sarif.sarif
 
   # ── Terraform Plan ────────────────────────────────────────────────────────────
   plan:
