@@ -1,0 +1,31 @@
+aws_region  = "us-east-1"
+environment = "prod"
+
+# Networking
+vpc_cidr             = "10.0.0.0/16"
+availability_zones   = ["us-east-1a", "us-east-1b"]
+public_subnet_cidrs  = ["10.0.1.0/24", "10.0.2.0/24"]
+private_subnet_cidrs = ["10.0.10.0/24", "10.0.11.0/24"]
+
+# Frontend
+frontend_bucket_name = "" 
+domain_name          = ""   # Optional: your custom domain
+
+# Compute
+instance_type        = "t3.small"
+asg_min_size         = 1
+asg_max_size         = 4
+asg_desired_capacity = 2
+key_name             = "your-ec2-key-pair-name"
+
+# Redis
+redis_node_type = "cache.t3.micro"
+
+# Application secrets (use GitHub Actions secrets in CI/CD)
+ecr_repository_url = "123456789012.dkr.ecr.us-east-1.amazonaws.com/starttech-backend"
+mongo_uri          = "mongodb+srv://user:pass@cluster.mongodb.net/much_todo_db"
+jwt_secret         = "your-very-long-random-jwt-secret"
+allowed_origins    = "https://xxxx.cloudfront.net"
+
+# Monitoring
+alarm_email = "ops@yourcompany.com"
