@@ -44,7 +44,7 @@ resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat[count.index].id
   subnet_id     = aws_subnet.public[count.index].id
 
-  tags = { Name = "starttech-${var.environment}-nat-${count.index + 1}" }
+  tags       = { Name = "starttech-${var.environment}-nat-${count.index + 1}" }
   depends_on = [aws_internet_gateway.main]
 }
 

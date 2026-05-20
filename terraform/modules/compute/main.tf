@@ -129,7 +129,7 @@ resource "aws_iam_instance_profile" "backend_ec2" {
 resource "aws_elasticache_subnet_group" "redis" {
   name       = "starttech-${var.environment}-redis-subnet"
   subnet_ids = var.private_subnet_ids
-  
+
   lifecycle {
     ignore_changes = [subnet_ids]
   }
@@ -237,13 +237,13 @@ resource "aws_launch_template" "backend" {
 
 # ─── Auto Scaling Group ───────────────────────────────────────────────────────
 resource "aws_autoscaling_group" "backend" {
-  name                = "starttech-${var.environment}-asg"
-  desired_capacity    = var.desired_capacity
-  max_size            = var.max_size
-  min_size            = var.min_size
-  vpc_zone_identifier = var.private_subnet_ids
-  target_group_arns   = [aws_lb_target_group.backend.arn]
-  health_check_type   = "ELB"
+  name                      = "starttech-${var.environment}-asg"
+  desired_capacity          = var.desired_capacity
+  max_size                  = var.max_size
+  min_size                  = var.min_size
+  vpc_zone_identifier       = var.private_subnet_ids
+  target_group_arns         = [aws_lb_target_group.backend.arn]
+  health_check_type         = "ELB"
   health_check_grace_period = 60
 
   launch_template {

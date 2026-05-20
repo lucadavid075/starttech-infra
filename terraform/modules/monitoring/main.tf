@@ -66,43 +66,43 @@ resource "aws_cloudwatch_dashboard" "main" {
       {
         type = "metric"
         properties = {
-          title  = "ALB Request Count"
-          period = 60
-		  region = "us-east-1"
+          title   = "ALB Request Count"
+          period  = 60
+          region  = "us-east-1"
           metrics = [["AWS/ApplicationELB", "RequestCount", "LoadBalancer", var.alb_arn_suffix]]
-          view   = "timeSeries"
-          stat   = "Sum"
+          view    = "timeSeries"
+          stat    = "Sum"
         }
       },
       {
         type = "metric"
         properties = {
-          title  = "ALB 5XX Errors"
-          period = 60
-		  region = "us-east-1"
+          title   = "ALB 5XX Errors"
+          period  = 60
+          region  = "us-east-1"
           metrics = [["AWS/ApplicationELB", "HTTPCode_ELB_5XX_Count", "LoadBalancer", var.alb_arn_suffix]]
-          view   = "timeSeries"
-          stat   = "Sum"
+          view    = "timeSeries"
+          stat    = "Sum"
         }
       },
       {
         type = "metric"
         properties = {
-          title  = "ASG Instance Count"
-          period = 60
-		  region = "us-east-1"
+          title   = "ASG Instance Count"
+          period  = 60
+          region  = "us-east-1"
           metrics = [["AWS/AutoScaling", "GroupInServiceInstances", "AutoScalingGroupName", var.asg_name]]
-          view   = "timeSeries"
-          stat   = "Average"
+          view    = "timeSeries"
+          stat    = "Average"
         }
       },
       {
         type = "log"
         properties = {
-          title   = "Backend Error Logs"
-          query   = "SOURCE '/starttech/${var.environment}/backend' | fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 50"
-          region  = "us-east-1"
-          view    = "table"
+          title  = "Backend Error Logs"
+          query  = "SOURCE '/starttech/${var.environment}/backend' | fields @timestamp, @message | filter @message like /ERROR/ | sort @timestamp desc | limit 50"
+          region = "us-east-1"
+          view   = "table"
         }
       }
     ]
