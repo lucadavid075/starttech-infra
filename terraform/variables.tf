@@ -37,7 +37,7 @@ variable "private_subnet_cidrs" {
 variable "frontend_bucket_name" {
   description = "S3 bucket name for the React frontend"
   type        = string
-  default     = "starttech-frontend-prod"
+  default     = "starttech-frontend-prod-114324232512"
 }
 
 variable "domain_name" {
