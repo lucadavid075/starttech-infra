@@ -60,13 +60,13 @@ docker run -d \
   -e ENABLE_CACHE=true \
   -e REDIS_ADDR="${redis_addr}" \
   -e ALLOWED_ORIGINS="${allowed_origins}" \
-  -e SECURE_COOKIE=true \
+  -e SECURE_COOKIE=false \
   -e LOG_LEVEL=INFO \
   -e LOG_FORMAT=json \
   --log-driver=awslogs \
   --log-opt awslogs-region=${aws_region} \
   --log-opt awslogs-group=/starttech/${environment}/backend \
-  --log-opt awslogs-stream=$(ec2-metadata --instance-id | cut -d' ' -f2) \
+  --log-opt awslogs-stream=$(curl -s http://169.254.169.254/latest/meta-data/instance-id) \
   ${ecr_repository_url}:latest
 
 # ── Health check loop ─────────────────────────────────────────────────────────
