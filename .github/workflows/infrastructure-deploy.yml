@@ -105,6 +105,7 @@ jobs:
           TF_VAR_ecr_repository_url: ${{ secrets.ECR_REPOSITORY_URL }}
           TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
           TF_VAR_allowed_origins: ${{ secrets.ALLOWED_ORIGINS }}
+          TF_VAR_frontend_bucket_name: ${{ secrets.FRONTEND_BUCKET_NAME }}
         run: |
           terraform plan -out=tfplan -no-color 2>&1 | tee plan_output.txt
           echo "exitcode=${PIPESTATUS[0]}" >> $GITHUB_OUTPUT
@@ -174,6 +175,7 @@ jobs:
           TF_VAR_ecr_repository_url: ${{ secrets.ECR_REPOSITORY_URL }}
           TF_VAR_alarm_email: ${{ secrets.ALARM_EMAIL }}
           TF_VAR_allowed_origins: ${{ secrets.ALLOWED_ORIGINS }}
+          TF_VAR_frontend_bucket_name: ${{ secrets.FRONTEND_BUCKET_NAME }}
         run: terraform apply -auto-approve tfplan
 
       - name: Capture Outputs
